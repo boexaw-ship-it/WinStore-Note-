@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WinStore Note</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <meta name="theme-color" content="#FF6A00">
+    
     <link rel="stylesheet" href="assets/css/style.css">
 
     <style>
@@ -53,7 +58,6 @@
 </head>
 <body>
 
-    <!-- HEADER -->
     <div class="app-header">
         <img src="assets/images/logo.png" alt="Logo" class="app-logo">
         <div class="app-title">WinStore Note</div>
@@ -61,10 +65,8 @@
 
     <div class="main-container">
 
-        <!-- ══ ENTRY PAGE ══ -->
         <div id="entry-page" class="app-page active">
 
-            <!-- Switch Buttons -->
             <div class="type-selector-grid">
                 <div id="card-sell" class="type-card active" onclick="switchEntryType('Sales')">
                     <div class="card-icon-wrapper sell-bg">
@@ -123,7 +125,6 @@
             </div>
         </div>
 
-        <!-- ══ SALES VIEW PAGE ══ -->
         <div id="sales-view-page" class="app-page">
             <div class="dashboard-total-card sell-theme">
                 <div class="dash-label">TOTAL SALES / စုစုပေါင်းအရောင်း</div>
@@ -147,7 +148,6 @@
             </div>
         </div>
 
-        <!-- ══ BUY VIEW PAGE ══ -->
         <div id="buy-view-page" class="app-page">
             <div class="dashboard-total-card buy-theme">
                 <div class="dash-label">TOTAL BUY / စုစုပေါင်းအဝယ်</div>
@@ -173,7 +173,6 @@
 
     </div>
 
-    <!-- BOTTOM NAV -->
     <div class="modern-bottom-nav">
         <div class="nav-item active" id="tab-entry" onclick="navigateTo('entry')">
             <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -195,7 +194,6 @@
         </div>
     </div>
 
-    <!-- Item Data -->
     <script>
         const SELL_ITEMS = [
             { name: "မျှင်ငပိ" }, { name: "ငပိထောင်း" }, { name: "ငါးခြောက်" },
@@ -208,7 +206,6 @@
         ];
     </script>
 
-    <!-- External JS files (သီးသန့်ဖိုင်တွေ) -->
     <script src="assets/js/sheets.js"></script>
     <script src="assets/js/calendar.js"></script>
     <script src="assets/js/app.js"></script>

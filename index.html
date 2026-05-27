@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinStore Note</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <style>
+        /* ── Orange Gradient Header ── */
+        .app-header {
+            background: linear-gradient(135deg, #FF822E 0%, #FF6A00 60%, #E05D00 100%);
+            border-bottom: none;
+            box-shadow: 0 4px 16px rgba(255, 106, 0, 0.35);
+            position: relative;
+            overflow: hidden;
+        }
+        .app-header::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 50%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.13) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        .app-logo {
+            border: 2px solid rgba(255,255,255,0.4);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .app-title {
+            color: #FFFFFF;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+        }
+
+        /* ── Switch Cards — Sell active: Orange Gradient ── */
+        .type-card#card-sell.active {
+            background: linear-gradient(135deg, #FF822E 0%, #FF6A00 100%);
+            border-color: #FF6A00;
+            box-shadow: 0 6px 20px rgba(255, 106, 0, 0.30);
+        }
+
+        /* ── Switch Cards — Buy active: Green Gradient ── */
+        .type-card#card-buy.active {
+            background: linear-gradient(135deg, #00C887 0%, #00B074 100%);
+            border-color: #00B074;
+            box-shadow: 0 6px 20px rgba(0, 176, 116, 0.30);
+        }
+
+        /* ── Inactive card icon colors preserved ── */
+        .type-card#card-sell:not(.active) .card-icon-wrapper { background: #FFF0E6; color: #FF6A00; }
+        .type-card#card-buy:not(.active)  .card-icon-wrapper { background: #E6F7F1; color: #00B074; }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <div class="app-header">
+        <img src="assets/images/logo.png" alt="Logo" class="app-logo">
+        <div class="app-title">WinStore Note</div>
+    </div>
+
+    <div class="main-container">
+
+        <!-- ══ ENTRY PAGE ══ -->
+        <div id="entry-page" class="app-page active">
+
+            <!-- Switch Buttons -->
+            <div class="type-selector-grid">
+                <div id="card-sell" class="type-card active" onclick="switchEntryType('Sales')">
+                    <div class="card-icon-wrapper sell-bg">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M12 2v14M17 11l-5-5-5 5M2 22h20"/>
+                        </svg>
+                    </div>
+                    <div class="card-label">📤 အရောင်းစာရင်း</div>
+                </div>
+
+                <div id="card-buy" class="type-card" onclick="switchEntryType('Buy')">
+                    <div class="card-icon-wrapper buy-bg">
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M12 16V2M7 11l5 5 5-5M2 22h20"/>
+                        </svg>
+                    </div>
+                    <div class="card-label">📥 အဝယ်စာရင်း</div>
+                </div>
+            </div>
+
+            <div class="section-title">📦 ပစ္စည်းရွေးချယ်ရန်</div>
+            <div class="helper-text">ပစ္စည်းကို တစ်ချက်နှိပ်၍ ရွေးပါ -</div>
+
+            <div class="items-list-container" id="entry-items-list"></div>
+
+            <div class="status-banner" id="entry-status">ရွေးချယ်ထားသည့်ပစ္စည်း: မရှိသေးပါ</div>
+
+            <div class="premium-input-card">
+                <div class="input-field">
+                    <label>📅 ရက်စွဲ (DATE)</label>
+                    <input type="date" id="entry-date">
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <div class="input-field" style="flex: 2;">
+                        <label id="label-qty">🔢 အရေအတွက်</label>
+                        <input type="number" id="entry-qty" placeholder="0">
+                    </div>
+                    <div class="input-field" style="flex: 1;">
+                        <label>⚖️ ယူနစ်</label>
+                        <select id="entry-unit" style="padding: 14px; border: 1.5px solid #E2E8F0; border-radius: 12px; background: #F8FAFC; font-size: 1rem; font-weight: 700;">
+                            <option value="ပိဿာ">ပိဿာ</option>
+                            <option value="ကျပ်သား">ကျပ်သား</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-field">
+                    <label id="label-price">💰 စုစုပေါင်းကျသင့်ငွေ (ကျပ်)</label>
+                    <input type="number" id="entry-total-price" placeholder="0">
+                </div>
+
+                <button class="premium-submit-btn" id="btn-submit" onclick="submitForm()">
+                    <span>💾 မှတ်တမ်းအသစ် သိမ်းဆည်းမည်</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ══ SALES VIEW PAGE ══ -->
+        <div id="sales-view-page" class="app-page">
+            <div class="dashboard-total-card sell-theme">
+                <div class="dash-label">TOTAL SALES / စုစုပေါင်းအရောင်း</div>
+                <div class="dash-amount" id="total-sales-amount">0</div>
+                <div class="dash-currency">MMK</div>
+            </div>
+
+            <div class="section-title">📋 လက်ရှိ အရောင်းမှတ်တမ်းများ</div>
+            <div class="table-container">
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>ရက်စွဲ</th>
+                            <th>ပစ္စည်း</th>
+                            <th>အရေအတွက်</th>
+                            <th>ကျသင့်ငွေ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sales-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ══ BUY VIEW PAGE ══ -->
+        <div id="buy-view-page" class="app-page">
+            <div class="dashboard-total-card buy-theme">
+                <div class="dash-label">TOTAL BUY / စုစုပေါင်းအဝယ်</div>
+                <div class="dash-amount" id="total-buy-amount">0</div>
+                <div class="dash-currency">MMK</div>
+            </div>
+
+            <div class="section-title">📋 လက်ရှိ အဝယ်မှတ်တမ်းများ</div>
+            <div class="table-container">
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>ရက်စွဲ</th>
+                            <th>ပစ္စည်း</th>
+                            <th>အရေအတွက်</th>
+                            <th>ကျသင့်ငွေ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="buy-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- BOTTOM NAV -->
+    <div class="modern-bottom-nav">
+        <div class="nav-item active" id="tab-entry" onclick="navigateTo('entry')">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            <span>စာရင်းသွင်း</span>
+        </div>
+        <div class="nav-item" id="tab-sales-view" onclick="navigateTo('sales-view')">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 2v14M17 11l-5-5-5 5M2 22h20"/>
+            </svg>
+            <span>အရောင်းပြရန်</span>
+        </div>
+        <div class="nav-item" id="tab-buy-view" onclick="navigateTo('buy-view')">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M12 16V2M7 11l5 5 5-5M2 22h20"/>
+            </svg>
+            <span>အဝယ်ပြရန်</span>
+        </div>
+    </div>
+
+    <!-- Item Data -->
+    <script>
+        const SELL_ITEMS = [
+            { name: "မျှင်ငပိ" }, { name: "ငပိထောင်း" }, { name: "ငါးခြောက်" },
+            { name: "ပုဇွန်ခြောက်" }, { name: "သီဟိုဠ်စေ့" }, { name: "ဒူးရင်းယို" }, { name: "ရေခူ" }
+        ];
+        const BUY_ITEMS = [
+            { name: "မျှင်ငပိ" }, { name: "ငါးခြောက်" }, { name: "ပုဇွန်ခြောက်" },
+            { name: "သီဟိုဠ်စေ့" }, { name: "ဒူးရင်းယို" }, { name: "ရေခူ" },
+            { name: "တန်ဆာခ" }, { name: "ပလတ်စတစ်အိတ်" }, { name: "ဗူးဖိုး" }
+        ];
+    </script>
+
+    <!-- External JS files (သီးသန့်ဖိုင်တွေ) -->
+    <script src="assets/js/sheets.js"></script>
+    <script src="assets/js/calendar.js"></script>
+    <script src="assets/js/app.js"></script>
+
+</body>
+</html>

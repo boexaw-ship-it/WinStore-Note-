@@ -1,0 +1,411 @@
+/* =============================================
+   WinStore Note — style.css
+   ============================================= */
+
+/* ── CSS Variables ── */
+:root {
+    --primary:        #FF6A00;
+    --primary-light:  #FFF0E6;
+    --primary-dark:   #E05D00;
+    --green-accent:   #00B074;
+    --green-light:    #E6F7F1;
+    --bg-main:        #F4F7F6;
+    --surface:        #FFFFFF;
+    --text-heading:   #191C1F;
+    --text-body:      #464A4E;
+    --border:         #E9ECEF;
+}
+
+/* ── Reset ── */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-heading);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =============================================
+   📱 HEADER — Orange Gradient
+   ============================================= */
+.app-header {
+    background: linear-gradient(135deg, #FF822E 0%, #FF6A00 60%, #E05D00 100%);
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px rgba(255, 106, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+}
+/* Shine overlay */
+.app-header::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.13) 0%, transparent 100%);
+    pointer-events: none;
+}
+.app-logo {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    margin-right: 12px;
+    object-fit: cover;
+    border: 2px solid rgba(255,255,255,0.4);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.app-title {
+    font-size: 1.25rem;
+    font-weight: 900;
+    color: #FFFFFF;
+    letter-spacing: -0.3px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
+
+/* =============================================
+   📦 MAIN CONTAINER
+   ============================================= */
+.main-container {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 16px;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 90px;
+}
+
+.app-page        { display: none; }
+.app-page.active { display: block; }
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text-heading);
+    margin: 18px 0 6px 0;
+}
+.helper-text {
+    font-size: 0.9rem;
+    color: var(--text-body);
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+/* =============================================
+   🔀 SWITCH CARDS — အရောင်း / အဝယ်
+   ============================================= */
+.type-selector-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.type-card {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.01);
+}
+
+.card-icon-wrapper {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+}
+
+/* Inactive icon bg */
+.sell-bg { background: var(--primary-light); color: var(--primary); }
+.buy-bg  { background: var(--green-light);   color: var(--green-accent); }
+
+.card-label {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--text-body);
+}
+
+/* ── Sell card ACTIVE — Orange Gradient ── */
+.type-card#card-sell.active {
+    background: linear-gradient(135deg, #FF822E 0%, #FF6A00 100%);
+    border-color: #FF6A00;
+    box-shadow: 0 6px 20px rgba(255, 106, 0, 0.35);
+}
+
+/* ── Buy card ACTIVE — Green Gradient ── */
+.type-card#card-buy.active {
+    background: linear-gradient(135deg, #00C887 0%, #00B074 100%);
+    border-color: #00B074;
+    box-shadow: 0 6px 20px rgba(0, 176, 116, 0.35);
+}
+
+/* Active state — label & icon shared */
+.type-card.active .card-label {
+    color: #FFFFFF;
+}
+.type-card.active .card-icon-wrapper {
+    background: rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+}
+
+/* =============================================
+   📋 ITEMS LIST
+   ============================================= */
+.items-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.item-list-row {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+}
+.item-text-main {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    flex: 1;
+}
+.item-price-badge {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 6px 12px;
+    border-radius: 10px;
+}
+
+/* Selected row */
+.item-list-row.selected {
+    background: linear-gradient(135deg, #FF822E 0%, #FF6A00 100%) !important;
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(255, 106, 0, 0.2);
+}
+.item-list-row.selected .item-text-main  { color: #FFFFFF; }
+.item-list-row.selected .item-price-badge {
+    background-color: #FFFFFF;
+    color: var(--primary);
+}
+
+/* =============================================
+   📢 STATUS BANNER
+   ============================================= */
+.status-banner {
+    background: var(--surface);
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 16px 0;
+    color: var(--text-body);
+    border: 2px dashed #CBD5E1;
+    transition: all 0.2s ease;
+}
+.status-banner.highlight {
+    background: var(--primary-light);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+/* =============================================
+   📝 INPUT CARD
+   ============================================= */
+.premium-input-card {
+    background: var(--surface);
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.02);
+    margin-bottom: 10px;
+}
+.input-field {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+.input-field label {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: var(--text-heading);
+    margin-bottom: 8px;
+}
+.input-field input,
+.input-field select {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 12px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    outline: none;
+    background-color: #F8FAFC;
+    transition: all 0.2s;
+}
+.input-field input:focus {
+    border-color: var(--primary);
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.1);
+}
+
+/* =============================================
+   🚀 SUBMIT BUTTON
+   ============================================= */
+.premium-submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #FF822E 0%, #FF6A00 100%);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 14px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255, 106, 0, 0.25);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.premium-submit-btn:active {
+    transform: scale(0.98);
+    box-shadow: 0 3px 10px rgba(255, 106, 0, 0.2);
+}
+
+/* =============================================
+   💳 DASHBOARD TOTAL CARD
+   ============================================= */
+.dashboard-total-card {
+    color: white;
+    padding: 26px 20px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 22px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+.dashboard-total-card.sell-theme {
+    background: linear-gradient(135deg, #2A3B50 0%, #1A2533 100%);
+    border-bottom: 5px solid var(--primary);
+}
+.dashboard-total-card.buy-theme {
+    background: linear-gradient(135deg, #2A3B50 0%, #1A2533 100%);
+    border-bottom: 5px solid var(--green-accent);
+}
+.dash-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #A0AEC0;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+.dash-amount {
+    font-size: 2.6rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+}
+.dash-currency {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 4px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* =============================================
+   📊 TABLE
+   ============================================= */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+}
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+.modern-table th {
+    background-color: #F8FAFC;
+    padding: 14px;
+    font-weight: 800;
+    color: var(--text-body);
+    border-bottom: 2px solid var(--border);
+}
+.modern-table td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+}
+.modern-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* =============================================
+   🧭 BOTTOM NAV
+   ============================================= */
+.modern-bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 70px;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.03);
+    z-index: 1000;
+}
+.nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #FFBB88;        /* Orange နုနု — inactive */
+    cursor: pointer;
+    gap: 4px;
+    transition: all 0.2s ease;
+}
+.nav-item span {
+    font-size: 0.82rem;
+    font-weight: 800;
+}
+.nav-item.active {
+    color: var(--primary); /* Orange ရင့် — active */
+}
+.nav-item.active svg {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}

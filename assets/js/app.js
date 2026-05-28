@@ -10,7 +10,7 @@ let salesRecords = [];
 let buyRecords   = [];
 
 // ── မင်းရဲ့ Web App URL ကို ဒီမှာထည့်ပါ ──
-const WEB_APP_URL = "https://script.google.com/macros/s/ထွက်လာတဲ့_ID_ကို_ဒီမှာ_ထည့်ပါ/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw_bof1nYwkprCE_4GaK2l6nAU2lN40HLSKnm116qLnHWOFbOhJgzuKhJk4VHQZv6eZ/exec";
 
 // =============================================
 //  NAVIGATION — စာမျက်နှာပြောင်းခြင်း

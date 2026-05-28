@@ -1,5 +1,5 @@
 // =============================================
-//  WinStore Note — app.js
+//  WinStore Note — app.js (Full Updated)
 //  အရောင်း / အဝယ် မှတ်တမ်း Logic အားလုံး
 // =============================================
 
@@ -9,19 +9,18 @@ let selectedItem = null;
 let salesRecords = [];
 let buyRecords   = [];
 
+// ── မင်းရဲ့ Web App URL ကို ဒီမှာထည့်ပါ ──
+const WEB_APP_URL = "https://script.google.com/macros/s/ထွက်လာတဲ့_ID_ကို_ဒီမှာ_ထည့်ပါ/exec";
+
 // =============================================
 //  NAVIGATION — စာမျက်နှာပြောင်းခြင်း
 // =============================================
 function navigateTo(pageId) {
-    // Page အားလုံး ပိတ်
     document.querySelectorAll('.app-page').forEach(p => p.classList.remove('active'));
-    // Nav tab အားလုံး ပိတ်
     document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
-    // ရွေးချယ်ထားသော page ဖွင့်
     document.getElementById(pageId + '-page').classList.add('active');
 
-    // ရွေးချယ်ထားသော tab highlight
     const tabMap = {
         'entry'      : 'tab-entry',
         'sales-view' : 'tab-sales-view',
@@ -31,7 +30,6 @@ function navigateTo(pageId) {
         document.getElementById(tabMap[pageId]).classList.add('active');
     }
 
-    // View page ဖွင့်ချိန် table ကို ချက်ချင်း render လုပ်
     if (pageId === 'sales-view') renderSalesTable();
     if (pageId === 'buy-view')   renderBuyTable();
 }
@@ -48,7 +46,6 @@ function switchEntryType(type) {
 
     renderItems();
 
-    // Status banner reset
     const statusEl = document.getElementById('entry-status');
     statusEl.innerText = 'ရွေးချယ်ထားသည့်ပစ္စည်း: မရှိသေးပါ';
     statusEl.classList.remove('highlight');
@@ -77,12 +74,9 @@ function renderItems() {
 // =============================================
 function selectItem(item, element) {
     selectedItem = item;
-
-    // ရှိပြီးသား selection အားလုံး ဖျက်
     document.querySelectorAll('.item-list-row').forEach(el => el.classList.remove('selected'));
     element.classList.add('selected');
 
-    // Status banner update
     const statusEl = document.getElementById('entry-status');
     statusEl.innerText = `ရွေးချယ်ထားသည့်ပစ္စည်း: ${item.name}`;
     statusEl.classList.add('highlight');
@@ -92,7 +86,6 @@ function selectItem(item, element) {
 //  SUBMIT — မှတ်တမ်းသိမ်းဆည်းခြင်း
 // =============================================
 function submitForm() {
-    // Validation
     if (!selectedItem) {
         alert('ကျေးဇူးပြု၍ ပစ္စည်းတစ်ခု ရွေးပေးပါ။');
         return;
@@ -116,22 +109,23 @@ function submitForm() {
         total : parseInt(total)
     };
 
-    // ── Records array ထဲ သိမ်း ──
     if (currentType === 'Sales') salesRecords.push(data);
     else                         buyRecords.push(data);
 
-    // ── Google Sheets ပို့ (sheets.js) ──
     saveToSheet(data);
 
     alert('မှတ်တမ်း သိမ်းဆည်းပြီးပါပြီ။ ✅');
     resetForm();
+    // သိမ်းပြီးတာနဲ့ Table တွေ Update ဖြစ်သွားအောင် ပြန် Render
+    renderSalesTable();
+    renderBuyTable();
 }
 
 // =============================================
 //  RESET — Form ကို ရှင်းလင်းခြင်း
 // =============================================
 function resetForm() {
-    document.getElementById('entry-qty').value         = '';
+    document.getElementById('entry-qty').value           = '';
     document.getElementById('entry-total-price').value = '';
 
     selectedItem = null;
@@ -186,9 +180,22 @@ function renderBuyTable() {
 }
 
 // =============================================
-//  INIT — အက်ပ်စတင်ချိန်
+//  INIT — အက်ပ်စတင်ချိန် နှင့် DATA LOADING
 // =============================================
+function loadRecordsFromSheet() {
+    fetch(WEB_APP_URL)
+    .then(res => res.json())
+    .then(data => {
+        salesRecords = data.filter(r => r.type === 'Sales');
+        buyRecords = data.filter(r => r.type === 'Buy');
+        renderSalesTable();
+        renderBuyTable();
+    })
+    .catch(err => console.log("Data ဆွဲယူရာတွင် အမှားရှိနေသည် - ", err));
+}
+
 window.onload = () => {
     renderItems();
     WinStoreCalendar.init();
+    loadRecordsFromSheet(); // အရေးကြီးသည်: App စဖွင့်ရင် Data အရင်ဆွဲမည်
 };

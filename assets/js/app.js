@@ -9,7 +9,7 @@ let selectedItem = null;
 let salesRecords = [];
 let buyRecords   = [];
 
-// ── မင်းရဲ့ Web App URL ကို ဒီမှာထည့်ပါ ──
+// ── မင်းရဲ့ Web App URL ──
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw_bof1nYwkprCE_4GaK2l6nAU2lN40HLSKnm116qLnHWOFbOhJgzuKhJk4VHQZv6eZ/exec";
 
 // =============================================
@@ -116,7 +116,6 @@ function submitForm() {
 
     alert('မှတ်တမ်း သိမ်းဆည်းပြီးပါပြီ။ ✅');
     resetForm();
-    // သိမ်းပြီးတာနဲ့ Table တွေ Update ဖြစ်သွားအောင် ပြန် Render
     renderSalesTable();
     renderBuyTable();
 }
@@ -151,7 +150,7 @@ function renderSalesTable() {
 
     tbody.innerHTML = salesRecords.map(r => `
         <tr>
-            <td>${r.date}</td>
+            <td>${new Date(r.date).toLocaleDateString('en-CA')}</td>
             <td>${r.item}</td>
             <td>${r.qty}</td>
             <td>${r.total.toLocaleString()}</td>
@@ -171,7 +170,7 @@ function renderBuyTable() {
 
     tbody.innerHTML = buyRecords.map(r => `
         <tr>
-            <td>${r.date}</td>
+            <td>${new Date(r.date).toLocaleDateString('en-CA')}</td>
             <td>${r.item}</td>
             <td>${r.qty}</td>
             <td>${r.total.toLocaleString()}</td>
@@ -197,5 +196,5 @@ function loadRecordsFromSheet() {
 window.onload = () => {
     renderItems();
     WinStoreCalendar.init();
-    loadRecordsFromSheet(); // အရေးကြီးသည်: App စဖွင့်ရင် Data အရင်ဆွဲမည်
+    loadRecordsFromSheet(); 
 };

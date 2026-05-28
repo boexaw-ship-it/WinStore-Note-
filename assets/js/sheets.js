@@ -33,6 +33,12 @@ function saveToSheet(data) {
     .then(() => {
         // no-cors မှာ response body မရနိုင်သောကြောင့် success ဟု မှတ်ယူ
         showToast("✅ Google Sheets သို့ သိမ်းဆည်းပြီးပါပြီ။");
+        
+        // --- အရေးကြီး --- 
+        // Data ပို့ပြီးတာနဲ့ Table တွေကို အသစ်ပြန်ဆွဲ (Refresh)
+        if (typeof loadRecordsFromSheet === 'function') {
+            loadRecordsFromSheet();
+        }
     })
     .catch((error) => {
         console.error("Sheets Error:", error);
@@ -51,12 +57,12 @@ function setButtonLoading(isLoading) {
     if (!btn) return;
 
     if (isLoading) {
-        btn.disabled     = true;
-        btn.innerHTML    = "<span>⏳ သိမ်းဆည်းနေသည်...</span>";
+        btn.disabled      = true;
+        btn.innerHTML     = "<span>⏳ သိမ်းဆည်းနေသည်...</span>";
         btn.style.opacity = "0.7";
     } else {
-        btn.disabled     = false;
-        btn.innerHTML    = "<span>💾 မှတ်တမ်းအသစ် သိမ်းဆည်းမည်</span>";
+        btn.disabled      = false;
+        btn.innerHTML     = "<span>💾 မှတ်တမ်းအသစ် သိမ်းဆည်းမည်</span>";
         btn.style.opacity = "1";
     }
 }

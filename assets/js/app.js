@@ -10,7 +10,7 @@ let salesRecords = [];
 let buyRecords   = [];
 
 // ── မင်းရဲ့ Web App URL ──
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw_bof1nYwkprCE_4GaK2l6nAU2lN40HLSKnm116qLnHWOFbOhJgzuKhJk4VHQZv6eZ/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbys1rQvBLERjGPYcLI5QDyCztUo-9aqwX0Fg0p1yDl-ojU1HnXzgdAGQwgw7C9OUfHr/exec";
 
 // =============================================
 //  NAVIGATION — စာမျက်နှာပြောင်းခြင်း

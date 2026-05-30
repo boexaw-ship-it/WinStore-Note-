@@ -4,7 +4,7 @@
 // =============================================
 
 // ── ဒီ URL ကို သင့် Apps Script URL နဲ့ အစားထိုးပါ ──
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_bof1nYwkprCE_4GaK2l6nAU2lN40HLSKnm116qLnHWOFbOhJgzuKhJk4VHQZv6eZ/exec";
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbys1rQvBLERjGPYcLI5QDyCztUo-9aqwX0Fg0p1yDl-ojU1HnXzgdAGQwgw7C9OUfHr/exec";
 
 // =============================================
 //  MAIN FUNCTION — Sheets ဆီ data ပို့ခြင်း
